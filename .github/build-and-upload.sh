@@ -1,10 +1,14 @@
 #!/bin/bash
 
+echo "Cloning graphhopper"
 git clone https://github.com/graphhopper/graphhopper.git
 cd graphhopper
+echo "Downloading Dockerfile"
 curl -L https://raw.githubusercontent.com/IsraelHikingMap/graphhopper-docker-image-push/main/Dockerfile > Dockerfile
+echo "Building docker image"
 docker build . -t israelhikingmap/graphhopper:latest
 docker login --username $DOCKERHUB_USER --password $DOCKERHUB_TOKEN
+echo "Publishing docker image"
 docker push israelhikingmap/graphhopper:latest
 
 TAG=`git for-each-ref --sort=committerdate refs/tags | tail -n 1 | cut -d "/" -f3`
@@ -14,7 +18,9 @@ else
     mv Dockerfile ../Dockerfile
     git checkout tags/$TAG
     mv ../Dockerfile Dockerfile
+    echo "Building docker image for tag: $TAG"
     docker build . -t israelhikingmap/graphhopper:$TAG
+    echo "Publishing docker image for tag: $TAG"
     docker push israelhikingmap/graphhopper:$TAG
 fi
 
