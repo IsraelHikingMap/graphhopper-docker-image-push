@@ -6,7 +6,7 @@ WORKDIR /graphhopper
 
 COPY . .
 
-RUN ./graphhopper.sh build
+RUN mvn clean install
 
 FROM openjdk:11.0-jre
 
@@ -16,14 +16,14 @@ RUN mkdir -p /data
 
 WORKDIR /graphhopper
 
-COPY --from=build /graphhopper/web/target/*.jar ./web/target/
+COPY --from=build /graphhopper/web/target/*.jar ./
 # pom.xml is used to get the jar file version. see https://github.com/graphhopper/graphhopper/pull/1990#discussion_r409438806
-COPY ./graphhopper.sh ./pom.xml ./config-example.yml ./
+COPY ./config-example.yml ./
 
 VOLUME [ "/data" ]
 
 EXPOSE 8989
 
-ENTRYPOINT [ "./graphhopper.sh", "web" ]
+ENTRYPOINT [ "java -jar *.jar", "server" ]
 
-CMD [ "/data/europe_germany_berlin.pbf" ]
+CMD [ "-Ddw.graphhopper.datareader.file=berlin-latest.osm.pbf" ]
