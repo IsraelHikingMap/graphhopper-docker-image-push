@@ -6,24 +6,24 @@ WORKDIR /graphhopper
 
 COPY . .
 
-RUN ./graphhopper.sh build
+RUN mvn clean install
 
 FROM openjdk:11.0-jre
 
 ENV JAVA_OPTS "-Xmx1g -Xms1g -Ddw.server.application_connectors[0].bind_host=0.0.0.0 -Ddw.server.application_connectors[0].port=8989"
 
+ENV TOOL_OPTS "-Ddw.graphhopper.datareader.file=europe_germany_berlin.pbf -Ddw.graphhopper.graph.location=default-gh"
+
 RUN mkdir -p /data
 
 WORKDIR /graphhopper
 
-COPY --from=build /graphhopper/web/target/*.jar ./web/target/
-# pom.xml is used to get the jar file version. see https://github.com/graphhopper/graphhopper/pull/1990#discussion_r409438806
-COPY ./graphhopper.sh ./pom.xml ./config-example.yml ./
+COPY --from=build /graphhopper/web/target/graphhopper*.jar ./
+
+COPY ./config-example.yml ./
 
 VOLUME [ "/data" ]
 
 EXPOSE 8989
 
-ENTRYPOINT [ "./graphhopper.sh", "web" ]
-
-CMD [ "/data/europe_germany_berlin.pbf" ]
+ENTRYPOINT [ "java $JAVA_OPTS $TOOL_OPTS -jar *.jar", "server config-example.yml" ]
