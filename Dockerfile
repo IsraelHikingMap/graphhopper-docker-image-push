@@ -12,7 +12,7 @@ FROM openjdk:11.0-jre
 
 ENV JAVA_OPTS "-Xmx1g -Xms1g -Ddw.server.application_connectors[0].bind_host=0.0.0.0 -Ddw.server.application_connectors[0].port=8989"
 
-ENV TOOL_OPTS "-Ddw.graphhopper.datareader.file=europe_germany_berlin.pbf -Ddw.graphhopper.graph.location=berlin-gh"
+ENV TOOL_OPTS "-Ddw.graphhopper.datareader.file=europe_germany_berlin.pbf -Ddw.graphhopper.graph.location=default-gh"
 
 RUN mkdir -p /data
 
