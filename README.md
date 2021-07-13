@@ -7,7 +7,7 @@ I would like to first and foremost thank the [graphhopper](https://www.graphhopp
 They are doing a great job and we are truly happy to help by contributing to thier code base like we had done in the past.
 Graphhopper team has decided not to build a docker image and this repository is here to bridge that gap.
 This repository is extremely simple, all it does is the following:
-1. Every morning at 7 AM it builds the latest code using Github actions from the [graphhopper repository](https://github.com/graphhopper/graphhopper) and uploads the image to docker hub with the `latest` tag
+1. Every night at 1 AM it builds the latest code using Github actions from the [graphhopper repository](https://github.com/graphhopper/graphhopper) and uploads the image to docker hub with the `latest` tag
 2. It checks if there's a new version tag, and if so builds it and upload it as well with the relevant tag
 
 That's all.
