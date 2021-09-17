@@ -26,4 +26,6 @@ VOLUME [ "/data" ]
 
 EXPOSE 8989
 
+HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost:8989/health || exit 1
+
 ENTRYPOINT [ "java $JAVA_OPTS $TOOL_OPTS -jar *.jar", "server config-example.yml" ]
