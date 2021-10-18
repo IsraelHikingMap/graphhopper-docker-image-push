@@ -24,5 +24,5 @@ Without the `TOOL_OPTS` this image won't run!
 
 You can also completely override the entry point and use this for example:
 ```
-docker run --entrypoint /bin/bash israelhikingmap/graphhopper -c "wget https://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf -O /data/berlin.osm.bpf && java -Ddw.graphhopper.datareader.file=/data/berlin.osm.pbf -Ddw.graphhopper.graph.location=berlin-gh -jar *.jar server config-example.yml"
+docker run --entrypoint /bin/bash israelhikingmap/graphhopper -c "wget https://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf -O /data/berlin.osm.pbf && java -Ddw.graphhopper.datareader.file=/data/berlin.osm.pbf -Ddw.graphhopper.graph.location=berlin-gh -jar *.jar server config-example.yml"
 ```
