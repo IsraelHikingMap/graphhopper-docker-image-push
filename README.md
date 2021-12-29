@@ -17,7 +17,7 @@ Feel free to submit issues or pull requests if you would like to improve the cod
 In order to use this image there are two environment variables you need to pass to docker:
 ```
 JAVA_OPTS: "-Xmx1g -Xms1g -Ddw.server.application_connectors[0].bind_host=0.0.0.0 -Ddw.server.application_connectors[0].port=8989"
-TOOL_OPTS: "-Ddw.graphhopper.datareader.file=flie-location-inside-docker.pbf -Ddw.graphhopper.graph.location=default-gh"
+TOOL_OPTS: "-Ddw.graphhopper.datareader.file=file-location-inside-docker.pbf -Ddw.graphhopper.graph.location=default-gh"
 ```
 
 Without the `TOOL_OPTS` this image won't run!
