@@ -16,34 +16,34 @@ fi
 echo "## using java $vers from $JAVA_HOME"
 
 function printBashUsage {
-  echo "Usage:"
-  echo "-a | --action <action>    must be one the following actions:"
-  echo "     --action import      creates the graph cache only, used for later faster starts"
-  echo "     --action web         starts a local server for user access at localhost:8989 and API access at localhost:8989/route"
+  echo "$(basename $0): Start a Gpahhopper server.
+  echo "user access at 0.0.0.0:8989 and API access at 0.0.0.0:8989/route"
+  echo ""
+  echo "options:"
+  echo "--import                  only create the graph cache, to be used later for faster starts"
   echo "-c | --config <config>    specify the application configuration"
-  echo "-h | --help               display this message"
-  echo "--host <host>             specify to which host the service should be bound"
   echo "-i | --input <file>       path to the input file in the file system"
   echo "--url <url>               download input file from a url and save as data.pbf"
   echo "-o | --graph-cache <dir>  directory for graph cache output"
   echo "-p | --profiles <string>  comma separated list of vehicle profiles"
-  echo "--port <port>             start web server at specific port"
+  echo "--port <port>             start web server at specific port rather than port 8989"
+  echo "--host <host>             specify to which host the service should be bound rather than 0.0.0.0"
+  echo "-h | --help               display this message"
 }
 
 # one or two character parameters have one minus character'-' all longer parameters have two minus characters '--'
 while [ ! -z $1 ]; do
   case $1 in
-    -a|--action) ACTION=$2; shift 2;;
+    --import) ACTION=import; shift 1;;
     -c|--config) CONFIG="$2"; shift 2;;
-    -h|--help) printBashUsage
-      exit 0;;
-    --host) GH_WEB_OPTS="$GH_WEB_OPTS -Ddw.server.application_connectors[0].bind_host=$2"; shift 2;;
     -i|--input) FILE="$2"; shift 2;;
     --url) URL="$2"; shift 2;;
     -o|--graph-cache) GRAPH="$2"; shift 2;;
     -p|--profiles) GH_WEB_OPTS="$GH_WEB_OPTS -Ddw.graphhopper.graph.flag_encoders=$2"; shift 2;;
     --port) GH_WEB_OPTS="$GH_WEB_OPTS -Ddw.server.application_connectors[0].port=$2"; shift 2;;
-    # forward parameter via replacing first two characters of the key with -Ddw.graphhopper.
+    --host) GH_WEB_OPTS="$GH_WEB_OPTS -Ddw.server.application_connectors[0].bind_host=$2"; shift 2;;
+    -h|--help) printBashUsage
+      exit 0;;
     -*) echo "Option unknown: $1"
         echo
         printBashUsage
@@ -51,10 +51,7 @@ while [ ! -z $1 ]; do
   esac
 done
 
-if [ "$ACTION" = "" ]; then
- echo "## No action was specified!"
- printBashUsage
-fi
+: "${ACTION:=server}"
 
 if [[ "$CONFIG" == *properties ]]; then
  echo "$CONFIG not allowed as configuration. Use yml"
@@ -97,10 +94,6 @@ NAME="${BASENAME%.*}"
 : "${GRAPH:=$DATADIR/$NAME-gh}"
 
 echo "## Executing $ACTION. JAVA_OPTS=$JAVA_OPTS"
-
-if [[ "$ACTION" = "web" ]]; then
-  ACTION = "server"
-fi
 
 exec "$JAVA" $JAVA_OPTS -Ddw.graphhopper.datareader.file="$FILE" -Ddw.graphhopper.graph.location="$GRAPH" \
         $GH_WEB_OPTS -jar "$JAR" $ACTION $CONFIG
