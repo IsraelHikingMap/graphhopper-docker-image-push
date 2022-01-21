@@ -28,4 +28,4 @@ EXPOSE 8989
 
 HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost:8989/health || exit 1
 
-ENTRYPOINT [ "graphhopper.sh", "-a web -c config-example.yml --url https://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf" ]
+ENTRYPOINT [ "graphhopper.sh", "-a", "web", "-c", "config-example.yml" ]

@@ -24,7 +24,7 @@ function printBashUsage {
   echo "-h | --help               display this message"
   echo "--host <host>             specify to which host the service should be bound"
   echo "-i | --input <file>       path to the input file in the file system"
-  echo "--url <url>               url to download from. the file will be saved as data.pbf"
+  echo "--url <url>               download input file from a url and save as data.pbf"
   echo "-o | --graph-cache <dir>  directory for graph cache output"
   echo "-p | --profiles <string>  comma separated list of vehicle profiles"
   echo "--port <port>             start web server at specific port"
@@ -52,7 +52,7 @@ while [ ! -z $1 ]; do
 done
 
 if [ "$ACTION" = "" ]; then
- echo "## Action $ACTION not found!"
+ echo "## No action was specified!"
  printBashUsage
 fi
 
@@ -78,7 +78,7 @@ if ["$URL" != ""]; then
 fi
 
 if [ "$FILE" = "" ]; then
-  echo -e "No file or url specified."
+  echo -e "No file or url were specified."
   printBashUsage
   exit
 fi

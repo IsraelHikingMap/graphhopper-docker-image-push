@@ -14,7 +14,7 @@ That's all.
 
 Feel free to submit issues or pull requests if you would like to improve the code here
 
-In order to use this image there you can edit the following environment variables:
+This docker image uses the following default environment setting:
 ```
 JAVA_OPTS: "-Xmx1g -Xms1g -Ddw.server.application_connectors[0].bind_host=0.0.0.0 -Ddw.server.application_connectors[0].port=8989"
 ```
