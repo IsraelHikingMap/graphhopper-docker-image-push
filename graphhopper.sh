@@ -92,7 +92,7 @@ BASENAME=$(basename "${FILE}")
 # NAME = file without extension if any
 NAME="${BASENAME%.*}"
 
-: "${JAVA_OPTS:=-Xmx1000m -Xms1000m}"
+: "${JAVA_OPTS:=-Xmx1g -Xms1g}"
 : "${JAR:=*.jar}"
 : "${GRAPH:=$DATADIR/$NAME-gh}"
 
