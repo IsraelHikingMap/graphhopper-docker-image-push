@@ -10,6 +10,7 @@ This repository is extremely simple, all it does is the following:
 1. Every night at 1 AM it builds the latest code using Github actions from the [graphhopper repository](https://github.com/graphhopper/graphhopper) and uploads the image to docker hub with the `latest` tag
 2. It checks if there's a new version tag, and if so builds it and upload it as well with the relevant tag
 3. Adds a graphhopper.sh file for ease of use
+
 That's all.
 
 Feel free to submit issues or pull requests if you would like to improve the code here
