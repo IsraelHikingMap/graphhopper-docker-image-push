@@ -16,22 +16,26 @@ fi
 echo "## using java $vers from $JAVA_HOME"
 
 function printBashUsage {
-  echo "$(basename $0): Start a Gpahhopper server.
+  echo "$(basename $0): Start a Gpahhopper server."
   echo "user access at 0.0.0.0:8989 and API access at 0.0.0.0:8989/route"
   echo ""
-  echo "options:"
+  echo "Usage""
+  echo "$(basename $0) -i | --input <file> [<parameter> ...] "
+  echo "$(basename $0) --url <url> [<parameter> ...] "
+  echo ""
+  echo "parameters:"
   echo "--import                  only create the graph cache, to be used later for faster starts"
   echo "-c | --config <config>    specify the application configuration"
   echo "-i | --input <file>       path to the input file in the file system"
   echo "--url <url>               download input file from a url and save as data.pbf"
   echo "-o | --graph-cache <dir>  directory for graph cache output"
   echo "-p | --profiles <string>  comma separated list of vehicle profiles"
-  echo "--port <port>             start web server at specific port rather than port 8989"
+  echo "--port <port>             start web server at the given port rather than 8989"
   echo "--host <host>             specify to which host the service should be bound rather than 0.0.0.0"
   echo "-h | --help               display this message"
 }
 
-# one or two character parameters have one minus character'-' all longer parameters have two minus characters '--'
+# one character parameters have one minus character'-'. longer parameters have two minus characters '--'
 while [ ! -z $1 ]; do
   case $1 in
     --import) ACTION=import; shift 1;;
@@ -43,11 +47,11 @@ while [ ! -z $1 ]; do
     --port) GH_WEB_OPTS="$GH_WEB_OPTS -Ddw.server.application_connectors[0].port=$2"; shift 2;;
     --host) GH_WEB_OPTS="$GH_WEB_OPTS -Ddw.server.application_connectors[0].bind_host=$2"; shift 2;;
     -h|--help) printBashUsage
-      exit 0;;
+        exit 0;;
     -*) echo "Option unknown: $1"
         echo
         printBashUsage
-    exit 2;;
+        exit 2;;
   esac
 done
 
@@ -77,7 +81,7 @@ fi
 if [ "$FILE" = "" ]; then
   echo -e "No file or url were specified."
   printBashUsage
-  exit
+  exit 2
 fi
 
 # DATA_DIR = directories path to the file if any (if current directory, return .)
