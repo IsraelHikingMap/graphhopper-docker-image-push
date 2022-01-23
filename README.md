@@ -17,7 +17,7 @@ Feel free to submit issues or pull requests if you would like to improve the cod
 
 This docker image uses the following default environment setting:
 ```
-JAVA_OPTS: "-Xmx1g -Xms1g -Ddw.server.application_connectors[0].bind_host=0.0.0.0 -Ddw.server.application_connectors[0].port=8989"
+JAVA_OPTS: "-Xmx1g -Xms1g"
 ```
 
 You can also completely override the entry point and use this for example:
