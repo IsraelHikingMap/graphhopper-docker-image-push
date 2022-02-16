@@ -19,7 +19,7 @@ function printBashUsage {
   echo "$(basename $0): Start a Gpahhopper server."
   echo "user access at 0.0.0.0:8989 and API access at 0.0.0.0:8989/route"
   echo ""
-  echo "Usage""
+  echo "Usage"
   echo "$(basename $0) -i | --input <file> [<parameter> ...] "
   echo "$(basename $0) --url <url> [<parameter> ...] "
   echo ""
