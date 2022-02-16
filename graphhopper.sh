@@ -75,7 +75,7 @@ fi
 
 if [ "$URL" != "" ]; then
   wget -S -nv -O "data.pbf" "$URL"
-  FILE = "data.pbf"
+  FILE="data.pbf"
 fi
 
 if [ "$FILE" = "" ]; then
