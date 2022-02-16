@@ -73,7 +73,7 @@ if [ ! -f "config.yml" ]; then
   cp config-example.yml $CONFIG
 fi
 
-if ["$URL" != ""]; then
+if [ "$URL" != "" ]; then
   wget -S -nv -O "data.pbf" "$URL"
   FILE = "data.pbf"
 fi
