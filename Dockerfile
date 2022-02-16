@@ -20,7 +20,7 @@ COPY --from=build /graphhopper/web/target/graphhopper*.jar ./
 
 COPY ./config-example.yml ./
 
-COPY ./graphhopper.sh ./
+COPY --chmod=0755 ./graphhopper.sh ./
 
 VOLUME [ "/data" ]
 
