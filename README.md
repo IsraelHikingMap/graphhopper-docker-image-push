@@ -24,7 +24,7 @@ For a quick startup you can run the following command to create the andorra rout
 ```
 docker run -p 8989:8989 israelhikingmap/graphhopper --url https://download.geofabrik.de/europe/andorra-latest.osm.pbf --host 0.0.0.0
 ```
-Then surf to `http://loaclhost:8989/`
+Then surf to `http://localhost:8989/`
 
 You can also completely override the entry point and use this for example:
 ```
