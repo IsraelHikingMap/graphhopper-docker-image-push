@@ -20,7 +20,7 @@ COPY --from=build /graphhopper/web/target/graphhopper*.jar ./
 
 COPY ./config-example.yml ./
 
-COPY --chmod=0755 ./graphhopper.sh ./
+COPY ./graphhopper.sh ./
 
 VOLUME [ "/data" ]
 
@@ -28,4 +28,4 @@ EXPOSE 8989
 
 HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost:8989/health || exit 1
 
-ENTRYPOINT [ "graphhopper.sh", "-c", "config-example.yml" ]
+ENTRYPOINT [ "./graphhopper.sh", "-c", "config-example.yml" ]
