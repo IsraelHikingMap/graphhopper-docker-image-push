@@ -6,6 +6,7 @@ cd graphhopper
 echo "Downloading Dockerfile and graphhopper.sh"
 curl -L https://raw.githubusercontent.com/IsraelHikingMap/graphhopper-docker-image-push/main/Dockerfile > Dockerfile
 curl -L https://raw.githubusercontent.com/IsraelHikingMap/graphhopper-docker-image-push/main/graphhopper.sh > graphhopper.sh
+chmod +x ./graphhopper.sh
 echo "Building docker image"
 docker build . -t israelhikingmap/graphhopper:latest
 docker login --username $DOCKERHUB_USER --password $DOCKERHUB_TOKEN
