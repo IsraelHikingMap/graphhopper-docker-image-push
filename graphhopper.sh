@@ -94,7 +94,7 @@ BASENAME=$(basename "${FILE}")
 NAME="${BASENAME%.*}"
 
 : "${JAVA_OPTS:=-Xmx1g -Xms1g}"
-: "${JAR:=*.jar}"
+: "${JAR:=$(find . -type f -name "*.jar")}"
 : "${GRAPH:=$DATADIR/$NAME-gh}"
 
 echo "## Executing $ACTION. JAVA_OPTS=$JAVA_OPTS"
