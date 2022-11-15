@@ -17,21 +17,20 @@ echo "## using java $vers from $JAVA_HOME"
 
 function printBashUsage {
   echo "$(basename $0): Start a Gpahhopper server."
-  echo "user access at 0.0.0.0:8989 and API access at 0.0.0.0:8989/route"
+  echo "Default user access at 0.0.0.0:8989 and API access at 0.0.0.0:8989/route"
   echo ""
   echo "Usage"
-  echo "$(basename $0) -i | --input <file> [<parameter> ...] "
-  echo "$(basename $0) --url <url> [<parameter> ...] "
+  echo "$(basename $0) [-i <osm-file> | --url <url>] [<parameter> ...] "
   echo ""
   echo "parameters:"
-  echo "--import                  only create the graph cache, to be used later for faster starts"
-  echo "-c | --config <config>    specify the application configuration"
-  echo "-i | --input <file>       path to the input file in the file system"
+  echo "-i | --input <osm-file>   OSM local input file location"
   echo "--url <url>               download input file from a url and save as data.pbf"
+  echo "--import                  only create the graph cache, to be used later for faster starts"
+  echo "-c | --config <config>    application configuration file location"
   echo "-o | --graph-cache <dir>  directory for graph cache output"
   echo "-p | --profiles <string>  comma separated list of vehicle profiles"
-  echo "--port <port>             start web server at the given port rather than 8989"
-  echo "--host <host>             specify to which host the service should be bound rather than 0.0.0.0"
+  echo "--port <port>             port for web server [default: 8989]"
+  echo "--host <host>             host address of the web server [default: 0.0.0.0]"
   echo "-h | --help               display this message"
 }
 
@@ -76,12 +75,6 @@ fi
 if [ "$URL" != "" ]; then
   wget -S -nv -O "data.pbf" "$URL"
   FILE="data.pbf"
-fi
-
-if [ "$FILE" = "" ]; then
-  echo -e "No file or url were specified."
-  printBashUsage
-  exit 2
 fi
 
 # DATA_DIR = directories path to the file if any (if current directory, return .)
