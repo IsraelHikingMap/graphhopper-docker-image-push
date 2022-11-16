@@ -18,8 +18,6 @@ COPY --from=build /graphhopper/web/target/graphhopper*.jar .
 
 COPY graphhopper.sh graphhopper/config-example.yml .
 
-COPY ./graphhopper.sh ./
-
 VOLUME [ "/data" ]
 
 EXPOSE 8989
