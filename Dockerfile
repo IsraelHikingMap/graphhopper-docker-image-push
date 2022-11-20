@@ -1,10 +1,8 @@
 FROM maven:3.6.3-jdk-8 as build
 
-RUN apt-get install -y wget
-
 WORKDIR /graphhopper
 
-COPY . .
+COPY graphhopper .
 
 RUN mvn clean install
 
@@ -16,11 +14,9 @@ RUN mkdir -p /data
 
 WORKDIR /graphhopper
 
-COPY --from=build /graphhopper/web/target/graphhopper*.jar ./
+COPY --from=build /graphhopper/web/target/graphhopper*.jar .
 
-COPY ./config-example.yml ./
-
-COPY ./graphhopper.sh ./
+COPY graphhopper.sh graphhopper/config-example.yml .
 
 VOLUME [ "/data" ]
 
