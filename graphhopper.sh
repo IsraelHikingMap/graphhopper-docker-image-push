@@ -66,7 +66,6 @@ if [ "$URL" != "" ]; then
 fi
 
 # create the directories if needed
-mkdir -p $(dirname "${FILE}")
 mkdir -p $(dirname "${GRAPH}")
 
 echo "## Executing $ACTION. JAVA_OPTS=$JAVA_OPTS"
