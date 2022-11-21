@@ -54,43 +54,22 @@ while [ ! -z $1 ]; do
   esac
 done
 
+# Defaults
 : "${ACTION:=server}"
-
-if [[ "$CONFIG" == *properties ]]; then
- echo "$CONFIG not allowed as configuration. Use yml"
- exit
-fi
-
-# default init, https://stackoverflow.com/a/28085062/194609
-: "${CONFIG:=config.yml}"
-if [[ -f $CONFIG && $CONFIG != config.yml ]]; then
-  echo "Copying non-default config file: $CONFIG"
-  cp $CONFIG config.yml
-fi
-if [ ! -f "config.yml" ]; then
-  echo "No config file was specified, using config-example.yml"
-  cp config-example.yml $CONFIG
-fi
-
-if [ "$URL" != "" ]; then
-  wget -S -nv -O "data.pbf" "$URL"
-  FILE="data.pbf"
-fi
-
-# DATA_DIR = directories path to the file if any (if current directory, return .)
-DATADIR=$(dirname "${FILE}")
-# create the directories if needed
-mkdir -p $DATADIR
-# BASENAME = filename (file without the directories)
-BASENAME=$(basename "${FILE}")
-# NAME = file without extension if any
-NAME="${BASENAME%.*}"
-
+: "${GRAPH:=/data/default-gh}"
+: "${CONFIG:=config-example.yml}"
 : "${JAVA_OPTS:=-Xmx1g -Xms1g}"
 : "${JAR:=$(find . -type f -name "*.jar")}"
-: "${GRAPH:=$DATADIR/$NAME-gh}"
+
+if [ "$URL" != "" ]; then
+  wget -S -nv -O "${FILE:=data.pbf}" "$URL"
+fi
+
+# create the directories if needed
+mkdir -p $(dirname "${FILE}")
+mkdir -p $(dirname "${GRAPH}")
 
 echo "## Executing $ACTION. JAVA_OPTS=$JAVA_OPTS"
 
-exec "$JAVA" $JAVA_OPTS -Ddw.graphhopper.datareader.file="$FILE" -Ddw.graphhopper.graph.location="$GRAPH" \
+exec "$JAVA" $JAVA_OPTS ${FILE:+-Ddw.graphhopper.datareader.file="$FILE"} -Ddw.graphhopper.graph.location="$GRAPH" \
         $GH_WEB_OPTS -jar "$JAR" $ACTION $CONFIG
