@@ -18,9 +18,12 @@ COPY --from=build /graphhopper/web/target/graphhopper*.jar .
 
 COPY graphhopper.sh graphhopper/config-example.yml .
 
+# Enable connections from outside of the container
+RUN sed -i '/^ *bind_host/s/^ */&# /p' config-example.yml
+
 VOLUME [ "/data" ]
 
-EXPOSE 8989
+EXPOSE 8989 8990
 
 HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost:8989/health || exit 1
 
