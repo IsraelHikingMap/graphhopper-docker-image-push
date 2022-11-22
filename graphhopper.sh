@@ -20,7 +20,7 @@ function printBashUsage {
   echo "Default user access at 0.0.0.0:8989 and API access at 0.0.0.0:8989/route"
   echo ""
   echo "Usage"
-  echo "$(basename $0) [-i <osm-file> | --url <url>] [<parameter> ...] "
+  echo "$(basename $0) [<parameter> ...] "
   echo ""
   echo "parameters:"
   echo "-i | --input <osm-file>   OSM local input file location"
