@@ -14,9 +14,9 @@ RUN mkdir -p /data
 
 WORKDIR /graphhopper
 
-COPY --from=build /graphhopper/web/target/graphhopper*.jar .
+COPY --from=build /graphhopper/web/target/graphhopper*.jar ./
 
-COPY graphhopper.sh graphhopper/config-example.yml .
+COPY graphhopper.sh graphhopper/config-example.yml ./
 
 # Enable connections from outside of the container
 RUN sed -i '/^ *bind_host/s/^ */&# /p' config-example.yml
