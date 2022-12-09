@@ -4,9 +4,11 @@ echo "Cloning graphhopper"
 git clone https://github.com/graphhopper/graphhopper.git
 echo "Building docker image"
 docker build . -t israelhikingmap/graphhopper:latest
+docker buildx build --platform linux/arm64 -f arm64.Dockerfile .  -t israelhikingmap/graphhopper:arm64-latest
 docker login --username $DOCKERHUB_USER --password $DOCKERHUB_TOKEN
 echo "Publishing docker image"
 docker push israelhikingmap/graphhopper:latest
+docker push israelhikingmap/graphhopper:arm64-latest
 
 TAG=`cd graphhopper; git for-each-ref --sort=committerdate refs/tags | tail -n 1 | cut -d "/" -f3`
 if docker manifest inspect israelhikingmap/graphhopper:$TAG >/dev/null; then 

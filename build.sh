@@ -26,13 +26,15 @@ if [ ! -d graphhopper ]; then
 fi
 
 imagename="israelhikingmap/graphhopper:${1:-latest}"
+arm64imagename="israelhikingmap/graphhopper:arm64-${1:-latest}"
 if [ "$1" ]; then
   echo "Checking out graphhopper:$1"
   (cd graphhopper; git checkout --detach "$1")
 fi
 
 echo "Building docker image ${imagename}"
-docker build . -t ${imagename}
+docker buildx build --platform linux/amd64 . -t ${imagename}
+docker buildx build --platform linux/arm64 -f arm64.Dockerfile . -t ${arm64imagename}
 
 if [ $# -eq 1 ]; then
   echo "Use \"docker push ${imagename}\" to publish the image on Docker Hub"
