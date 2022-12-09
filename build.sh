@@ -33,7 +33,7 @@ if [ "$1" ]; then
 fi
 
 echo "Building docker image ${imagename}"
-docker buildx build --platform linux/amd64 . -t ${imagename}
+docker build . -t ${imagename}
 docker buildx build --platform linux/arm64 -f arm64.Dockerfile . -t ${arm64imagename}
 
 if [ $# -eq 1 ]; then
