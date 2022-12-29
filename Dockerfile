@@ -21,6 +21,8 @@ COPY graphhopper.sh graphhopper/config-example.yml ./
 # Enable connections from outside of the container
 RUN sed -i '/^ *bind_host/s/^ */&# /p' config-example.yml
 
+RUN chmod +x ./graphhopper.sh
+
 VOLUME [ "/data" ]
 
 EXPOSE 8989 8990
