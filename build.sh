@@ -2,7 +2,7 @@
 
 usage() (
 cat <<USAGE
-Build a docker image
+Build a docker image for GraphHopper and optionally push it to Docker Hub
 
 Usage:
   ./build.sh [[--push] <tag>]
@@ -14,6 +14,9 @@ Argument:
 Option:
   --push        Push the image to Docker Hub
   --help        Print this message
+  
+Docker Hub credentials are needed for pushing the image. If they are not provided using the
+DOCKERHUB_USER and DOCKERHUB_TOKEN environment variables, then they will be asked interactively.
 USAGE
 )
 
@@ -50,6 +53,5 @@ docker build . -t "${imagename}"
 if [ "${push}" == "false" ]; then
   echo "Use \"docker push ${imagename}\" to publish the image on Docker Hub"
 else
-  # TODO
   docker push "${imagename}"
 fi
