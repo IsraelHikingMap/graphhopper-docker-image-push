@@ -47,7 +47,7 @@ if [ "$1" ]; then
   (cd graphhopper; git checkout --detach "$1")
 fi
 
-# Create and use a new builder instance for multi-platform builds
+echo "Creating new builder instance for multi-platform (linux/amd64, linux/arm64/v8) builds to use for building Graphhopper"
 docker buildx create --use --name graphhopperbuilder
 
 
