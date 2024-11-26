@@ -50,12 +50,12 @@ fi
 # Create and use a new builder instance for multi-platform builds
 docker buildx create --use --name graphhopperbuilder
 
-echo "Building docker image ${imagename} for linux/amd64 and linux/arm64/v8"
 
 if [ "${push}" == "true" ]; then
-  echo "Pushing docker image ${imagename} to Docker Hub"
+  echo "Building docker image ${imagename} for linux/amd64 and linux/arm64/v8 and pushing to Docker Hub\n"
   docker buildx build --platform linux/amd64,linux/arm64/v8 -t "${imagename}" --push .
 else
+  echo "Building docker image ${imagename} for linux/amd64 and linux/arm64/v8\n"
   docker buildx build --platform linux/amd64,linux/arm64/v8 -t "${imagename}" .
   echo "Use \"docker push ${imagename}\" to publish the image on Docker Hub"
 fi
