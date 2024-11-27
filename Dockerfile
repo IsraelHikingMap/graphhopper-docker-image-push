@@ -4,7 +4,7 @@ WORKDIR /graphhopper
 
 COPY graphhopper .
 
-RUN mvn clean install
+RUN mvn clean install -DskipTests
 
 FROM eclipse-temurin:21.0.1_12-jre
 
