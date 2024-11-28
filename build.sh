@@ -47,11 +47,19 @@ if [ "$1" ]; then
   (cd graphhopper; git checkout --detach "$1")
 fi
 
-echo "Building docker image ${imagename}"
-docker build . -t "${imagename}"
+echo "Creating new builder instance for multi-platform (linux/amd64, linux/arm64/v8) builds to use for building Graphhopper"
+docker buildx create --use --name graphhopperbuilder
 
-if [ "${push}" == "false" ]; then
-  echo "Use \"docker push ${imagename}\" to publish the image on Docker Hub"
+
+if [ "${push}" == "true" ]; then
+  echo "Building docker image ${imagename} for linux/amd64 and linux/arm64/v8 and pushing to Docker Hub\n"
+  docker buildx build --platform linux/amd64,linux/arm64/v8 -t "${imagename}" --push .
 else
-  docker push "${imagename}"
+  echo "Building docker image ${imagename} for linux/amd64 and linux/arm64/v8\n"
+  docker buildx build --platform linux/amd64,linux/arm64/v8 -t "${imagename}" .
+  echo "Use \"docker push ${imagename}\" to publish the image on Docker Hub"
 fi
+
+# Remove the builder instance after use
+docker buildx rm graphhopperbuilder
+rm -rf ./graphhopper
