@@ -28,7 +28,6 @@ function printBashUsage {
   echo "--import                  only create the graph cache, to be used later for faster starts"
   echo "-c | --config <config>    application configuration file location"
   echo "-o | --graph-cache <dir>  directory for graph cache output"
-  echo "-p | --profiles <string>  comma separated list of vehicle profiles"
   echo "--port <port>             port for web server [default: 8989]"
   echo "--host <host>             host address of the web server [default: 0.0.0.0]"
   echo "-h | --help               display this message"
@@ -42,7 +41,6 @@ while [ ! -z $1 ]; do
     -i|--input) FILE="$2"; shift 2;;
     --url) URL="$2"; shift 2;;
     -o|--graph-cache) GRAPH="$2"; shift 2;;
-    -p|--profiles) GH_WEB_OPTS="$GH_WEB_OPTS -Ddw.graphhopper.graph.flag_encoders=$2"; shift 2;;
     --port) GH_WEB_OPTS="$GH_WEB_OPTS -Ddw.server.application_connectors[0].port=$2"; shift 2;;
     --host) GH_WEB_OPTS="$GH_WEB_OPTS -Ddw.server.application_connectors[0].bind_host=$2"; shift 2;;
     -h|--help) printBashUsage
