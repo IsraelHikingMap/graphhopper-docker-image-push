@@ -21,6 +21,9 @@ COPY graphhopper.sh graphhopper/config-example.yml ./
 # Enable connections from outside of the container
 RUN sed -i '/^ *bind_host/s/^ */&# /p' config-example.yml
 
+# Append missing road_access option
+RUN sed -i '/^ *graph.encoded_values:/s/$/, road_access/' config-example.yml
+
 VOLUME [ "/data" ]
 
 EXPOSE 8989 8990
