@@ -62,4 +62,3 @@ fi
 
 # Remove the builder instance after use
 docker buildx rm graphhopperbuilder
-rm -rf ./graphhopper
