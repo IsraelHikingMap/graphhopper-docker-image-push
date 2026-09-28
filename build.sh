@@ -51,14 +51,14 @@ echo "Creating new builder instance for multi-platform (linux/amd64, linux/arm64
 docker buildx create --use --name graphhopperbuilder
 
 
+# Remove the builder instance on exit, even if the build fails
+trap 'docker buildx rm graphhopperbuilder' EXIT
+
 if [ "${push}" == "true" ]; then
-  echo "Building docker image ${imagename} for linux/amd64 and linux/arm64/v8 and pushing to Docker Hub\n"
-  docker buildx build --platform linux/amd64,linux/arm64/v8 -t "${imagename}" --push .
+  echo "Building docker image ${imagename} for linux/amd64 and linux/arm64/v8 and pushing to Docker Hub"
+  docker buildx build --platform linux/amd64,linux/arm64/v8 -t "${imagename}" --push . || exit $?
 else
-  echo "Building docker image ${imagename} for linux/amd64 and linux/arm64/v8\n"
-  docker buildx build --platform linux/amd64,linux/arm64/v8 -t "${imagename}" .
+  echo "Building docker image ${imagename} for linux/amd64 and linux/arm64/v8"
+  docker buildx build --platform linux/amd64,linux/arm64/v8 -t "${imagename}" . || exit $?
   echo "Use \"docker push ${imagename}\" to publish the image on Docker Hub"
 fi
-
-# Remove the builder instance after use
-docker buildx rm graphhopperbuilder
