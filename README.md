@@ -1,4 +1,9 @@
 # Graphhopper docker provider repository
+
+> [!IMPORTANT]
+> **Looking for a maintainer!** We are looking for someone to take over maintenance of this repository as we are no longer using graphhopper.
+> If you are interested, please open an issue.
+
 This repository holds the very basic things in order to make sure there's an updated graphhopper docker image which we use in our production server.
 Images can be found here:
 https://hub.docker.com/r/israelhikingmap/graphhopper
