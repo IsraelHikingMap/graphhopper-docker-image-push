@@ -1,4 +1,4 @@
-FROM maven:3.9.5-eclipse-temurin-21 as build
+FROM maven:3.9-eclipse-temurin-25 AS build
 
 WORKDIR /graphhopper
 
@@ -6,9 +6,14 @@ COPY graphhopper .
 
 RUN mvn clean install -DskipTests
 
-FROM eclipse-temurin:21.0.1_12-jre
+FROM eclipse-temurin:25-jre
 
-ENV JAVA_OPTS "-Xmx1g -Xms1g"
+ENV JAVA_OPTS="-Xmx1g -Xms1g"
+
+# curl is used by the healthcheck, wget by graphhopper.sh --url
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl wget \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /data
 
